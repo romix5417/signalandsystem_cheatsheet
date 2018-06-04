@@ -135,59 +135,67 @@ compile by romix (\url{http://romix.com}) and Joe Blitzstein, with contributions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{信号与系统}\smallskip \hrule height 2pt \smallskip
+\section{信号与系统基本概念}\smallskip \hrule height 2pt \smallskip
 
-% \subsection{Set Theory}
-
-% \begin{description}
-%     \item[Sets and Subsets] - A set is a collection of distinct objects. $A$ is a subset of $B$ if every element of $A$ is also included in $B$.
-%     \item[Empty Set] - The empty set, denoted $\emptyset$, is the set that contains nothing.
-%     \item[Set Notation] - Note that ${\bf {\bf A}} \cup {\bf B}$, ${\bf A} \cap {\bf B}$, and ${\bf A^c}$ are all sets too.
-%     \begin{description}
-%         \item[Union] - ${\bf A} \cup {\bf B}$ (read \emph{{\bf A} union {\bf B}}) means ${\bf A}\ or\ {\bf B}$
-%         \item[Intersection] - ${\bf A} \cap {\bf B}$ (read \emph{{\bf A} intersect {\bf B}}) means ${\bf A}\ and \ {\bf B}$
-%         \item[Complement] - ${\bf A^c}$ (read \emph{{\bf A} complement}) occurs whenever ${\bf A}$ does not occur
-%     \end{description}
-%     \item[Disjoint Sets] - Two sets are disjoint if their intersection is the empty set (e.g. they don't overlap).
-%     \item[Partition] - A set of subsets ${\bf A}_1, {\bf A}_2, {\bf A}_3, ... {\bf A}_n$ partition a space if they are disjoint and cover all possible outcomes (e.g. their union is the entire set). A simple case of a partitioning set of subsets is ${\bf A}, {\bf A^c}$
-%         \item[Principle of Inclusion-Exclusion] - Helps you find the probabilities of unions of events. 
-%         \[ P ({\bf A} \cup {\bf B}) = P({\bf A}) + P({\bf B}) - P({\bf A} \cap {\bf B}) \]
-%         \[P(\textnormal{Union of many events}) = \textnormal{Singles} - \textnormal{Doubles} + \textnormal{Triples} - \textnormal{Quadruples} \dots\]
-
-
-% \end{description}
 \subsection{信号能量与功率} 
+    连续时间信号$x(t)$在$t1 \leq t \leq t2$内的总能量可以定义为:
     \begin{minipage}{\linewidth}
-        \centering
-        \includegraphics[width=2in]{figures/icecream.pdf}
+        \begin{equation*}
+            \int_{t2}^{t1} \left | x(t) \right |^2dt
+        \end{equation*}            
     \end{minipage}
-        
- Let's say we have a compound experiment (an experiment with multiple components). If the 1st component has $n_1$ possible outcomes, the 2nd component has $n_2$ possible outcomes, \dots, and the $r$th component has $n_r$ possible outcomes, then overall there are $n_1n_2 \dots n_r$ possibilities for the whole experiment.
+
+    离散时间信号$x[t]$在$n1 \leq n \leq n2$内的总能量可以定义为:
+    \begin{minipage}{\linewidth}
+        \begin{equation*}
+            \sum_{n2}^{n1}\left | x[n] \right |^2
+        \end{equation*}            
+    \end{minipage}
  
 \subsection{自变量变换}
-   \begin{minipage}{\linewidth}
-            \centering
-             \includegraphics[width=1.2in]{figures/jar.pdf}
-        \end{minipage}
-      %  \begin{center}
-        The sampling table gives the number of possible samples of size $k$ out of a population of size $n$, under various assumptions about how the sample is collected. 
-        %\begin{table}[H]
-        \begin{center}
-                \setlength{\extrarowheight}{7pt}
-            \begin{tabular}{r|cc}
-                 & \textbf{Order Matters} & \textbf{Not Matter} \\ \hline
-                \textbf{With Replacement} & $\displaystyle n^k$ & $\displaystyle{n+k-1 \choose k}$ \\
-                \textbf{Without Replacement} & $\displaystyle\frac{n!}{(n - k)!}$ & $\displaystyle{n \choose k}$
-            \end{tabular}
-    \end{center}
-        %\end{table}
-    % \item[Experiments/Outcomes] - An experiment generates an outcome from a pre-determined list. For example, a dice roll generates outcomes in the set $\{1, 2, 3, 4, 5, 6\}$
-    % \item[Sample Space] - The sample space, denoted $\Omega$, is the set of possible outcomes. Note that the probability of this event is 1, since something in the sample space will always occur.
-    % \item[Event] - An event is a subset of the sample space, or a collection of possible outcomes of an experiment. We say that the event has occurred if any of the outcomes in the event have happened.
+    几种基本的自变量变换:
+    \begin{itemize}
+        \item 时移
+
+        连续信号: $x(t)->x(t-t_0)$
+
+        离散信号: $x[n]->x[n-n_0]$
+        \item 时间反转
+
+        连续信号: $x(t)->x(-t)$
+
+        离散信号: $x[n]->x[-n]$
+        \item 时间尺度变换
+
+        信号: $x(t)->x(at)$
+    \end{itemize}
+
+    周期信号: $x(t)=x(t+T)$ and $x[n]=x[n+N]$
+
+    偶信号: $x(-t)=x(t)$ and $x[-n]=x[n]$
+
+    奇信号: $x(-t)=-x(t)$ and $x[-n]=-x[n]$
+
+    重要结论: 
+    
+    任何信号都可以分解成为连个信号之和，一个偶信号，另一个为奇信号。
+
+    \begin{minipage}{\linewidth}
+        \begin{equation*}
+            Ev{x(t)} = 1/2[x(t)+x(-t)]
+        \end{equation*}
+        \begin{equation*}
+            Od{x(t)} = 1/2[x(t)-x(-t)]
+        \end{equation*}
+    \end{minipage}
+
 
 \subsection{指数信号与正弦信号}  
-        {If all outcomes are equally likely}, the probability of an event $A$ happening is:
-        \[P_{\textrm{naive}}(A) = \frac{\textnormal{number of outcomes favorable to $A$}}{\textnormal{number of outcomes}}\]
+美妙的欧拉公式: $e^{iw_0t}=cos(w_0t)+isin(w_0t)$
+
+复指数信号: $x(t)=Ce^{at}$
+
+正弦信号: $Acos(w_0t+\theta)$
 
 \subsection{单位冲击与单位阶跃函数}
 
@@ -295,26 +303,6 @@ The \emph{posterior odds} of $A$ are the \emph{likelihood ratio} times the \emph
 
 \section{周期信号的傅立叶级数表示}\smallskip \hrule height 2pt \smallskip
 
-% \subsection{Conditioning is the Soul of Statistics}
-
-% Law of Total Probability with ${\bf B}$ and ${\bf B^c}$ (special case of a partitioning set), and with Extra Conditioning (just add C!)
-%    \begin{align*} 
-% P({\bf A}) &= P({\bf A} | {\bf B})P({\bf B}) + P({\bf A} | {\bf B^c})P({\bf B^c}) \\
-% P({\bf A}) &= P({\bf A} \cap {\bf B})+ P({\bf A} \cap {\bf B^c}) \\
-% P({\bf A} | {\bf C}) &= P({\bf A} | {\bf B}, {\bf C})P({\bf B} | {\bf C}) + P({\bf A} | {\bf B^c}, {\bf C})P({\bf B^c} | {\bf C}) \\
-% P({\bf A} | {\bf C}) &= P({\bf A} \cap {\bf B} | {\bf C})+ P({\bf A} \cap {\bf B^c} | {\bf C})
-%    \end{align*} 
-   
-% Law of Total Probability with a partitioning ${\bf B}_0, {\bf B}_1, {\bf B}_2, {\bf B}_3, \dots, {\bf B}_n$, and applied to random variables ${\bf X}$, ${\bf Y}$.
-% \begin{align*} 
-% P({\bf A}) &= \sum_{i=0}^n P({\bf A} | {\bf B}_i)P({\bf B}_i) \\
-% P({\bf Y}=y) &= \sum_{k}P({\bf Y}=y|{\bf X}=k)P({\bf X}=k)
-%    \end{align*} 
-% Bayes' Rule, and with Extra Conditioning (just add C!)
-%     \begin{align*}
-%          P({\bf A}|{\bf B}) &= \frac{P({\bf A} \cap {\bf B})}{P({\bf B})} = \frac{P({\bf B}|{\bf A})P({\bf A})}{P({\bf B})} \\
-%          P({\bf A}|{\bf B}, {\bf C}) &= \frac{P({\bf A} \cap {\bf B} | {\bf C})}{P({\bf B} | {\bf C})} = \frac{P({\bf B}|{\bf A}, {\bf C})P({\bf A} | {\bf C})}{P({\bf B} | {\bf C})} 
-%     \end{align*}
     
 \subsection{线性时不变系统对复指数信号的响应}
 \begin{description}
