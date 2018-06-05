@@ -20,6 +20,8 @@
 \usepackage{enumitem}
 \setlist[description]{leftmargin=0pt}
 \usepackage{xfrac}
+\usetikzlibrary{datavisualization}
+
 \usepackage[pdftex,
             pdfauthor={William Chen},
             pdftitle={Signal and System Cheatsheet},
@@ -193,11 +195,148 @@ compile by romix (\url{http://romix.com}) and Joe Blitzstein, with contributions
 \subsection{指数信号与正弦信号}  
 美妙的欧拉公式: $e^{iw_0t}=cos(w_0t)+isin(w_0t)$
 
-复指数信号: $x(t)=Ce^{at}$
+复指数信号: $x(t)=Ce^{at}$, $x(t)=e^{jw_0t}$ and $x(n)=e^{jw_0n}$
 
-正弦信号: $Acos(w_0t+\theta)$
+正弦信号: $Acos(w_0t+\phi)$ and $Acos(w_0n+\phi)$
 
-\subsection{单位冲击与单位阶跃函数}
+正弦信号使用复指数信号表示: 
+$Acos(w_0t+\phi)=\frac{A}{2}e^{j\phi}e^{jw_0t}+
+\frac{A}{2}e^{-j\phi}e^{-jw_0t}$
+
+$Acos(w_0n+\phi)=\frac{A}{2}e^{j\phi}e^{jw_0n}+
+\frac{A}{2}e^{-j\phi}e^{-jw_0n}$
+
+$e^{jw_0t}$和$e^{jw_0n}$信号的比较:
+\begin{minipage}{\linewidth}
+    \begin{flushleft}
+    \begin{tabular}{p{3.97cm}<\centering p{3.97cm}<\centering}
+        \hline
+        $e^{jw_0t}$& $e^{jw_0n}$\\
+        \hline
+        $w_0$不同，信号不同     & 频率相差$2\pi$整数倍，信号相同\\
+        对任何$w_0$值都是周期的 & 仅当$w_0=2\pi m/N$时才是周期的，
+                                这里$N(>0)$和m均为整数\\
+        基波频率为$w_0$         & 基波频率$w_0/m$\\
+        基波周期：$w_0=0$,无定义 $w_0\neq 0$,$2\pi/w_0$ & 
+        基波周期：$w_0=0$,无定义$w_0\neq 0$,$m(\frac{2\pi}{{w_0n}})$ \\
+        \hline
+    \end{tabular}
+    \end{flushleft}
+\end{minipage}
+
+
+\subsection{单位冲激信号与单位阶跃函数}
+离散时间单位脉冲信号定义:
+$\delta[n]
+\begin{cases}
+ & \text{ 0 }, n \neq  0 \\ 
+ & \text{ 1 }, n =     0 \\ 
+\end{cases}$
+
+\begin{minipage}{\linewidth}
+\centering
+\begin{tikzpicture}[xscale=1.0]
+\draw [-] (-3.0,0)--(3.0,0);
+\draw [-] (0,0)--(0,1);
+\draw [fill] (0,1) circle [radius = 0.1] node [above right] {$\delta[n]$};
+\draw [fill] (0.5,0) circle [radius = 0.1];
+\draw [fill] (1.0,0) circle [radius = 0.1];
+\draw [fill] (1.5,0) circle [radius = 0.1];
+\draw [fill] (2.0,0) circle [radius = 0.1];
+\draw [fill] (-0.5,0) circle [radius = 0.1];
+\draw [fill] (-1.0,0) circle [radius = 0.1];
+\draw [fill] (-1.5,0) circle [radius = 0.1];
+\draw [fill] (-2.0,0) circle [radius = 0.1];
+\draw node (0,0) [below] {0};
+\end{tikzpicture}
+\end{minipage}
+
+离散时间单位阶跃信号定义:
+$u[n]
+\begin{cases}
+ & \text{ 0 }, n < 0 \\ 
+ & \text{ 1 }, x \geq  0 \\ 
+\end{cases}$
+
+\begin{minipage}{\linewidth}
+\centering
+\begin{tikzpicture}[xscale=1.0]
+\draw [-] (-3.0,0)--(3.0,0);
+\draw [-] (0,0)--(0,1);
+\draw [-] (0.5,0)--(0.5,1);
+\draw [-] (1.0,0)--(1.0,1);
+\draw [-] (1.5,0)--(1.5,1);
+\draw [-] (2.0,0)--(2.0,1);
+\draw [fill] (0,1) circle [radius = 0.1];
+\draw [fill] (0.5,1) circle [radius = 0.1];
+\draw [fill] (1.0,1) circle [radius = 0.1] node [above] {$u[n]$};
+\draw [fill] (1.5,1) circle [radius = 0.1];
+\draw [fill] (2.0,1) circle [radius = 0.1];
+\draw [fill] (-0.5,0) circle [radius = 0.1];
+\draw [fill] (-1.0,0) circle [radius = 0.1];
+\draw [fill] (-1.5,0) circle [radius = 0.1];
+\draw [fill] (-2.0,0) circle [radius = 0.1];
+
+\draw [fill] (2.3,0.5) circle [radius = 0.05];
+\draw [fill] (2.6,0.5) circle [radius = 0.05];
+\draw [fill] (2.9,0.5) circle [radius = 0.05];
+
+\draw node (0,0) [below] {0};
+\end{tikzpicture}
+\end{minipage}
+
+重要结论：离散时间单位脉冲是离散时间单位阶跃的一次差分。
+
+\begin{equation*}
+\delta[n]=u[n]-u[n-1]
+\end{equation*}
+
+连续时间单位脉冲信号定义:
+$u[t]
+\begin{cases}
+ & \text{ 0 }, t <  0 \\ 
+ & \text{ 1 }, t \geq     0 \\ 
+\end{cases}$
+
+\begin{minipage}{\linewidth}
+\centering
+\begin{tikzpicture}[xscale=1.0]
+\draw [-] (-3.0,0)--(3.0,0) node [below] {t};
+\draw [-] [line width=1] (-3.0,0)--(0,0);
+\draw [-] [line width=1] (0,0)--(0,1);
+\draw [-] [line width=1] (0,1)--(3,1);
+\draw [->] (0,0)--(0,2) node [above right] {$u(t)$};
+\draw node (0,0) [below] {0};
+\end{tikzpicture}
+\end{minipage}
+
+重要结论:连续阶跃函数是连续单位冲激的积分函数。
+
+\begin{equation*}
+u(t)=\int_{-\infty}^{t}\delta(t)dt
+\end{equation*}
+
+\subsection{基本系统性质}
+总结几种基本的系统性质
+\begin{itemize}
+    \item 记忆系统与无记忆系统
+
+    无记忆系统:系统的输出仅仅决定于该时刻的输入
+
+    记忆系统:当前的输入与输入和输出的将来值有关系
+    \item 可逆性与可逆系统
+    可逆系统:系统如果在不同的输入下，导致不同的输出，则称其为可逆系统。
+    \item 因果性
+    因果系统:如果一个系统再任何时刻的输出只决定于现在和过去的输入，那么称其为因果系统。
+    \item 稳定性
+    稳定系统:响应不会无界增长的系统。
+    \item 时不变性
+    时不变系统:系统的特性行为不随着时间而变，则称其为时不变系统。
+    \item 线性
+    线性系统: (1)  $y_1(t)+y_2(t)是对x_1(t)+x_2(t)的响应$。
+    
+    (2)$ay_1(t)$是对$ax_1(t)$的响应，此处a为任意复常数。
+\end{itemize}
 
 
 \section{线性时不变系统} \smallskip \hrule height 2pt \smallskip
@@ -1195,13 +1334,13 @@ William really likes speedsolving Rubik's Cubes. But he's pretty bad at it, so s
 %    By Adam's Law, we have  \begin{align*} E(e^{tT}) &= E(E(e^{tT}|N)) =E((pe^t + q)^N) = s\sum_{n=0}^\infty(pe^t + 1-p)^n(1-s)^n \\&=\frac{s}{1-(1-s)(pe^t+1-p)} =\frac{s}{s+(1-s)p-(1-s)pe^t}
 %    \end{align*}
 %    
-%    Intuitively, we would expect that $T$ is distributed Geometrically since $T$ is just a filtered version of $N$, which itself is Geometrically distributed. The MGF of $X\sim\Geom(\theta)$ is \[E(e^{tX}) = \displaystyle\frac{\theta}{1-(1-\theta) e^t}\]
+%    Intuitively, we would expect that $T$ is distributed Geometrically since $T$ is just a filtered version of $N$, which itself is Geometrically distributed. The MGF of $X\sim\Geom(\phi)$ is \[E(e^{tX}) = \displaystyle\frac{\phi}{1-(1-\phi) e^t}\]
 %    
-%    So, we would want to try to get our MGF into this form to identify what $\theta$ is. Taking our original MGF, it would appear that dividing by $s+(1-s)p$ would allow us to do this. Therefore, we have that \begin{center}
+%    So, we would want to try to get our MGF into this form to identify what $\phi$ is. Taking our original MGF, it would appear that dividing by $s+(1-s)p$ would allow us to do this. Therefore, we have that \begin{center}
 %    $E(e^{tT}) = \displaystyle\frac{s}{s+(1-s)p - (1-s)pe^t} = \frac{\frac{s}{s+(1-s)p}}{1-\frac{(1-s)p}{s+(1-s)p}e^t}$
 %    \end{center}
 %    
-%    By pattern-matching, it thus follows that $\boxed{T \sim \Geom(\theta)}$ where \[\boxed{\theta = \displaystyle\frac{s}{s+(1-s)p}}\]
+%    By pattern-matching, it thus follows that $\boxed{T \sim \Geom(\phi)}$ where \[\boxed{\phi = \displaystyle\frac{s}{s+(1-s)p}}\]
 
 \subsection{MGF -- Finding Moments}
 Find $E(X^3)$ for $X \sim \Expo(\lambda)$ using the MGF of $X$. \textbf{Answer:} The MGF of an $\Expo(\lambda)$ is $M(t) = \frac{\lambda}{\lambda-t}$. To get the third moment, we can take the third derivative of the MGF and evaluate at $t=0$: 
@@ -1362,7 +1501,7 @@ The table above gives R commands for working with various named distributions. C
 \hline
 \shortstack{Beta \\ \Beta($a, b$)} & \shortstack{$f(x) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}x^{a-1}(1-x)^{b-1}$\\$x \in (0, 1) $} & $\mu = \frac{a}{a + b}$  & $\frac{\mu(1-\mu)}{(a + b + 1)}$ & messy \\
 \hline
-\shortstack{Log-Normal \\ $\mathcal{LN}(\mu,\sigma^2)$} & \shortstack{$\frac{1}{x\sigma \sqrt{2\pi}}e^{-(\log x - \mu)^2/(2\sigma^2)}$\\$x \in (0, \infty)$} & $\theta = e^{ \mu + \sigma^2/2}$ & $\theta^2 (e^{\sigma^2} - 1)$ & doesn't exist\\
+\shortstack{Log-Normal \\ $\mathcal{LN}(\mu,\sigma^2)$} & \shortstack{$\frac{1}{x\sigma \sqrt{2\pi}}e^{-(\log x - \mu)^2/(2\sigma^2)}$\\$x \in (0, \infty)$} & $\phi = e^{ \mu + \sigma^2/2}$ & $\phi^2 (e^{\sigma^2} - 1)$ & doesn't exist\\
 \hline
 \shortstack{Chi-Square \\ $\chi_n^2$} & \shortstack{$\frac{1}{2^{n/2}\Gamma(n/2)}x^{n/2 - 1}e^{-x/2}$\\$x \in (0, \infty) $} & $n$  & $2n$ & $(1 - 2t)^{-n/2}, \, t < 1/2$\\
 \hline
