@@ -333,8 +333,11 @@ u(t)=\int_{-\infty}^{t}\delta(t)dt
     \item 时不变性
     时不变系统:系统的特性行为不随着时间而变，则称其为时不变系统。
     \item 线性
-    线性系统: (1)  $y_1(t)+y_2(t)是对x_1(t)+x_2(t)的响应$。
-    
+
+    满足线性系统的条件: 
+
+    (1)$y_1(t)+y_2(t)$是对$x_1(t)+x_2(t)$的响应。
+
     (2)$ay_1(t)$是对$ax_1(t)$的响应，此处a为任意复常数。
 \end{itemize}
 
@@ -342,20 +345,7 @@ u(t)=\int_{-\infty}^{t}\delta(t)dt
 \section{线性时不变系统} \smallskip \hrule height 2pt \smallskip
 
 \subsection{离散时间线性时不变系统:卷积和}
-    \begin{description}
-        % \item[Disjoint Events] - ${\bf A}$ and ${\bf B}$ are disjoint when they cannot happen simultaneously, or
-        %   \begin{align*}
-        %     P({\bf A} \cap {\bf B}) &= 0\\
-        %     {\bf A} \cap {\bf B} &= \emptyset
-        %   \end{align*}
-        \item[Independent Events] $A$ and $B$ are independent if knowing whether $A$ occurred gives no information about whether $B$ occurred. More formally, $A$ and $B$ (which have nonzero probability) are independent if and only if one of the following equivalent statements holds: 
-           \begin{align*} 
-            P({A}\cap { B}) &= P({A})P({B}) \\
-            P({ A}|{ B}) &= P({A})\\
-            P(B|A) &= P(B)
-           \end{align*}
-        \item[Conditional Independence]  ${A}$ and ${B}$ are conditionally independent given ${C}$ if $P({A}\cap {B}|{C}) = P({A}|{C})P({B}|{C})$. Conditional independence does not imply independence, and independence does not imply conditional independence.
-    \end{description}
+
     
 \subsection{连续时间线性时不变系统:卷积积分}
     \begin{description}
