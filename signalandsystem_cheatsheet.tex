@@ -345,6 +345,22 @@ u(t)=\int_{-\infty}^{t}\delta(t)dt
 \section{线性时不变系统} \smallskip \hrule height 2pt \smallskip
 
 \subsection{离散时间线性时不变系统:卷积和}
+一个离散时间信号可以用一组幅度加权和延时的单位样本序列的和来表示。
+\begin{equation*}
+x[n]=\sum_{k=-\infty}^{+\infty}x[k]\delta[n-k]
+\end{equation*}
+若x[n]=u[n],即单位阶跃序列，在这种情况下$k<0$,时$u[k]=0$，而$k\geq0$时$u[k]=1$，则式
+子可以表示为：
+\begin{equation*}
+u[n]=\sum_{k=0}^{+\infty}\delta[n-k]
+\end{equation*}
+根据线性系统的叠加性质，$x[n]$对应的响应为$y[n]$，$h[n-k]$为单位脉冲序列响应，那么则可
+以得到卷积和:
+\begin{equation*}    
+y[n]=\sum_{k=-\infty}^{+\infty}x[k]h[n-k]
+\end{equation*}
+重要结论:既然一个线性时不变系统对任意输入的响应可以用系统对单位脉冲的响应来表示，那
+么，线性时不变系统的单位脉冲响应就完全刻画了系统的特征。
 
     
 \subsection{连续时间线性时不变系统:卷积积分}
